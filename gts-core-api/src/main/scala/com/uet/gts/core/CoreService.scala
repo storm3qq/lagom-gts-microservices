@@ -1,7 +1,7 @@
 package com.uet.gts.core
 
 import akka.NotUsed
-import com.lightbend.lagom.scaladsl.api.{ Descriptor, Service, ServiceCall }
+import com.lightbend.lagom.scaladsl.api.{ Descriptor, Service, ServiceAcl, ServiceCall }
 import com.uet.gts.core.dtos.TeacherDTO
 
 trait CoreService extends Service {
@@ -14,6 +14,7 @@ trait CoreService extends Service {
       .withCalls(
         pathCall("/api/hello", hello _)
       )
-      .withAutoAcl(true)
+      .withAcls(ServiceAcl(pathRegex = Some("/api/hello")))
+     //.withAutoAcl(true) -> no filter
   }
 }

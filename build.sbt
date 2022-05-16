@@ -1,11 +1,10 @@
-
 //=======[ Common Information Setting ]=========
 ThisBuild / version := "v1.0.0"
 ThisBuild / organization := "com.uet"
 ThisBuild / scalaVersion := "2.13.8"
 ThisBuild / lagomServiceLocatorPort := 10000
 ThisBuild / lagomCassandraEnabled := false
-ThisBuild / libraryDependencySchemes += "org.scala-lang.modules" %% "scala-java8-compat" % VersionScheme.Always
+//ThisBuild / libraryDependencySchemes += "org.scala-lang.modules" %% "scala-java8-compat" % VersionScheme.Always
 
 //=======[ Libraries ]==========================
 val macwire = "com.softwaremill.macwire" %% "macros" % "2.5.7" % "provided"
@@ -19,14 +18,15 @@ lazy val `lagom-gts-microservices` = (project in file("."))
   .settings(
     name := "lagom-gts-microservices"
   )
-  .aggregate(`gts-core-api`)
+  .aggregate(`gts-core-api`, `gts-core-impl`)
+  .enablePlugins(JavaAppPackaging)
 
 lazy val `gts-core-api` = (project in file("gts-core-api"))
   .settings(
     libraryDependencies ++= Seq(
       lagomScaladslApi
     )
-  )
+  ).enablePlugins(JavaAppPackaging)
 
 lazy val `gts-core-impl` = (project in file("gts-core-impl"))
   .enablePlugins(LagomScala)
@@ -37,3 +37,6 @@ lazy val `gts-core-impl` = (project in file("gts-core-impl"))
     )
   )
   .dependsOn(`gts-core-api`)
+  .enablePlugins(JavaAppPackaging)
+
+//===========[ Task ]======================

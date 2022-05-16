@@ -1,0 +1,2 @@
+- Run all services on local: sbt runAll
+- Build to jar files: sbt gts-core-impl/universal:packageBin 

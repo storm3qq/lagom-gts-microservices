@@ -11,7 +11,7 @@ import scala.concurrent.{ Future, ExecutionContext => EC }
 class CoreServiceImpl(clusterSharding: ClusterSharding)(implicit ec: EC) extends CoreService {
 
   override def hello(): ServiceCall[NotUsed, TeacherDTO] = ServiceCall { _ =>
-    Future.successful{
+    Future.successful {
       new TeacherDTO("John Snow", 29)
     }
   }
