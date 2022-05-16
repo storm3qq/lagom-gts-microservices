@@ -4,7 +4,6 @@ ThisBuild / organization := "com.uet"
 ThisBuild / scalaVersion := "2.13.8"
 ThisBuild / lagomServiceLocatorPort := 10000
 ThisBuild / lagomCassandraEnabled := false
-//ThisBuild / libraryDependencySchemes += "org.scala-lang.modules" %% "scala-java8-compat" % VersionScheme.Always
 
 //=======[ Libraries ]==========================
 val macwire = "com.softwaremill.macwire" %% "macros" % "2.5.7" % "provided"
@@ -12,6 +11,7 @@ val akkaClusterSharding = "com.typesafe.akka" %% "akka-cluster-sharding-typed" %
 val akkaDiscovery = "com.typesafe.akka" %% "akka-discovery" % "2.6.19"
 val akkaJackson = "com.typesafe.akka" %% "akka-serialization-jackson" % "2.6.19"
 val akkaStream = "com.typesafe.akka" %% "akka-stream-typed" % "2.6.19"
+val slf4j = "com.typesafe.akka" %% "akka-slf4j" % "2.6.19"
 
 //=======[ Module Setting ]=====================
 lazy val `lagom-gts-microservices` = (project in file("."))
@@ -26,17 +26,15 @@ lazy val `gts-core-api` = (project in file("gts-core-api"))
     libraryDependencies ++= Seq(
       lagomScaladslApi
     )
-  ).enablePlugins(JavaAppPackaging)
+  )
 
 lazy val `gts-core-impl` = (project in file("gts-core-impl"))
   .enablePlugins(LagomScala)
   .settings(
     libraryDependencies ++= Seq(
       macwire, akkaClusterSharding, akkaDiscovery, akkaJackson, akkaStream,
-      lagomScaladslCluster
+      lagomScaladslCluster, slf4j, lagomScaladslAkkaDiscovery
     )
   )
   .dependsOn(`gts-core-api`)
-  .enablePlugins(JavaAppPackaging)
-
-//===========[ Task ]======================
+  .settings(lagomServiceHttpPort := 11000)

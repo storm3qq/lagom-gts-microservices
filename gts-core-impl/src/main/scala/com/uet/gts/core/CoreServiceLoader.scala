@@ -1,5 +1,6 @@
 package com.uet.gts.core
 
+import com.lightbend.lagom.scaladsl.akka.discovery.AkkaDiscoveryComponents
 import com.lightbend.lagom.scaladsl.api.ServiceLocator
 import com.lightbend.lagom.scaladsl.api.ServiceLocator.NoServiceLocator
 import com.lightbend.lagom.scaladsl.cluster.ClusterComponents
@@ -9,14 +10,11 @@ import com.lightbend.lagom.scaladsl.server.{ LagomApplication, LagomApplicationC
 import com.softwaremill.macwire.wire
 import com.uet.gts.core.CoreServiceLoader.CoreServiceApplication
 import com.uet.gts.core.configs.CoreSerializerRegistry
-import com.uet.gts.core.controllers.CoreServiceImpl
 import play.api.libs.ws.ahc.AhcWSComponents
 
 class CoreServiceLoader extends LagomApplicationLoader {
   override def load(context: LagomApplicationContext): LagomApplication =
-    new CoreServiceApplication(context) {
-      override def serviceLocator: ServiceLocator = NoServiceLocator
-    }
+    new CoreServiceApplication(context) with AkkaDiscoveryComponents
 
   override def loadDevMode(context: LagomApplicationContext): LagomApplication =
     new CoreServiceApplication(context) with LagomDevModeComponents

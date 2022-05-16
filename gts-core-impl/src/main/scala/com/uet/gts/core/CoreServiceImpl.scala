@@ -1,9 +1,8 @@
-package com.uet.gts.core.controllers
+package com.uet.gts.core
 
 import akka.NotUsed
 import akka.cluster.sharding.typed.scaladsl.ClusterSharding
 import com.lightbend.lagom.scaladsl.api.ServiceCall
-import com.uet.gts.core.CoreService
 import com.uet.gts.core.dtos.TeacherDTO
 
 import scala.concurrent.{ Future, ExecutionContext => EC }
