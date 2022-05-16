@@ -7,6 +7,7 @@ ThisBuild / libraryDependencySchemes += "org.scala-lang.modules" %% "scala-java8
 
 //=======[ Libraries ]==========================
 val macwire = "com.softwaremill.macwire" %% "macros" % "2.5.7" % "provided"
+val akkaClusterSharding = "com.typesafe.akka" %% "akka-cluster-sharding-typed" % "2.6.19"
 
 //=======[ Module Setting ]=====================
 lazy val `lagom-gts-microservices` = (project in file("."))
@@ -26,7 +27,7 @@ lazy val `gts-core-impl` = (project in file("gts-core-impl"))
   .enablePlugins(LagomScala)
   .settings(
     libraryDependencies ++= Seq(
-      macwire
+      macwire, akkaClusterSharding
     )
   )
   .dependsOn(`gts-core-api`)
