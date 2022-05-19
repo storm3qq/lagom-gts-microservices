@@ -4,15 +4,17 @@ ThisBuild / organization := "com.uet"
 ThisBuild / scalaVersion := "2.13.8"
 ThisBuild / lagomServiceLocatorPort := 10000
 ThisBuild / lagomCassandraEnabled := false
+ThisBuild / lagomKafkaEnabled := false
 ThisBuild / scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchecked", "-Xfatal-warnings")
 
 //=======[ Libraries ]==========================
 val macwire = "com.softwaremill.macwire" %% "macros" % "2.5.7" % "provided"
-val akkaClusterSharding = "com.typesafe.akka" %% "akka-cluster-sharding-typed" % "2.6.19"
-val akkaDiscovery = "com.typesafe.akka" %% "akka-discovery" % "2.6.19"
-val akkaJackson = "com.typesafe.akka" %% "akka-serialization-jackson" % "2.6.19"
-val akkaStream = "com.typesafe.akka" %% "akka-stream-typed" % "2.6.19"
-val slf4j = "com.typesafe.akka" %% "akka-slf4j" % "2.6.19"
+//val akkaClusterSharding = "com.typesafe.akka" %% "akka-cluster-sharding-typed" % "2.6.19"
+//val akkaDiscovery = "com.typesafe.akka" %% "akka-discovery" % "2.6.19"
+//val akkaJackson = "com.typesafe.akka" %% "akka-serialization-jackson" % "2.6.19"
+//val akkaStream = "com.typesafe.akka" %% "akka-stream-typed" % "2.6.19"
+//val slf4j = "com.typesafe.akka" %% "akka-slf4j" % "2.6.19"
+val postgresDriver = "org.postgresql" % "postgresql" % "42.3.4"
 val akkaDiscoveryKubernetesApi = "com.lightbend.akka.discovery" %% "akka-discovery-kubernetes-api" % "1.1.3"
 
 //=======[ Module Setting ]=====================
@@ -34,8 +36,8 @@ lazy val `gts-core-impl` = (project in file("gts-core-impl"))
   .enablePlugins(LagomScala)
   .settings(
     libraryDependencies ++= Seq(
-      macwire, akkaClusterSharding, akkaDiscovery, akkaJackson, akkaStream,
-      lagomScaladslCluster, slf4j, lagomScaladslAkkaDiscovery,
+      macwire, postgresDriver,
+      lagomScaladslCluster, lagomScaladslAkkaDiscovery,
       akkaDiscoveryKubernetesApi, lagomScaladslPersistenceJdbc
     )
   )
